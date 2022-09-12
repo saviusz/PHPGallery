@@ -1,14 +1,9 @@
 services:
-
   # development container
   development:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
-    environment:
-      - FLYWAY_URL=jdbc:mysql://${DATABASE_HOST}/${DATABASE_DB}
-      - FLYWAY_USER=${DATABASE_USER}
-      - FLYWAY_PASSWORD=${DATABASE_PASSWORD}
     volumes:
       - ..:/workspace
     stdin_open: true
@@ -22,20 +17,8 @@ services:
       - MYSQL_DATABASE=${DATABASE_DB}
       - MYSQL_USER=${DATABASE_USER}
       - MYSQL_PASSWORD=${DATABASE_PASSWORD}
-    
-  # flyway
-  flyway:
-    hostname: flyway
-    image: flyway/flyway:latest
-    environment:
-      - FLYWAY_URL=jdbc:mysql://${DATABASE_HOST}/${DATABASE_DB}
-      - FLYWAY_USER=${DATABASE_USER}
-      - FLYWAY_PASSWORD=${DATABASE_PASSWORD}
     volumes:
-      - ../sql:/flyway/sql
-    command: -locations=filesystem:/flyway/sql -connectRetries=60 migrate
-    depends_on:
-      - mysql_db
+      - ../db:/docker-entrypoint-initdb.d
 
   # web server
   webserver:
@@ -49,8 +32,23 @@ services:
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - DATABASE_DB=${DATABASE_DB}
     ports:
-      - 9080:80
+      - 8080:80
     volumes:
       - ./apache-virtualhost.conf:/etc/apache2/sites-enabled/00-default.conf
       - ./php.ini:/usr/local/etc/php/conf.d/php.ini
       - ../src:/var/www/html
+    depends_on: [mysql_db]
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=${DATABASE_HOST}
+      - PMA_USER=${DATABASE_USER}
+      - PMA_PASSWORD=${DATABASE_PASSWORD}
+    depends_on: [mysql_db]
+    volumes:
+      - ./phpmyadmin/darkwolf:/var/www/html/themes/darkwolf

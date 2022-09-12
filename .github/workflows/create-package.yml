@@ -1,0 +1,20 @@
+name: GitHub Actions Demo
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: mkdir "/Seweryn_Woliński-$GITHUB_REF_NAME"
+      - run: cp /src "/Seweryn_Woliński-$GITHUB_REF_NAME/php"
+      - run: cp /db "/Seweryn_Woliński-$GITHUB_REF_NAME/db"
+      - uses: vimtor/action-zip@v1
+        with:
+          files: "/Sewryn_Woliński-$GITHUB_REF_NAME"
+          recursive: false
+          dest: "/Sewryn_Woliński-$GITHUB_REF_NAME.zip"
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "/Sewryn_Woliński-$GITHUB_REF_NAME.zip"
