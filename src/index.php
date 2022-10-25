@@ -1,7 +1,20 @@
-<?php 
-$mysqli = new mysqli($_ENV["DATABASE_HOST"], $_ENV["DATABASE_USER"], $_ENV["DATABASE_PASSWORD"], $_ENV["DATABASE_DB"]);
+<?php session_start() ?>
+<!DOCTYPE html>
+<html lang="en">
 
-$result = $mysqli->query("SELECT * FROM users");
-$row = $result->fetch_assoc();
-var_export($row)
-?>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <?php if (!empty($_SESSION["loggedUser"])) : ?>
+        <a href="/auth/logout.php">Wyloguj</a>
+    <?php else : ?>
+        <a href="/logreg.php">Zaloguj</a>
+    <?php endif ?>
+</body>
+
+</html>
