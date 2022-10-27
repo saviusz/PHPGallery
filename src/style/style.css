@@ -1,0 +1,99 @@
+:root,
+body,
+html {
+  --f-heading: sans-serif;
+  --f-normal: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+
+  font-family: var(--f-normal);
+
+  margin: 0;
+
+  background-color: hsl(0, 0%, 97%);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+* {
+  box-sizing: border-box;
+  transition: all 150ms ease-in-out;
+}
+
+.menu {
+  display: block;
+  position: sticky;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  padding: 1em;
+
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
+
+  z-index: 10000;
+}
+
+.menu nav {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  gap: 0.5em;
+  align-items: center;
+}
+
+nav a {
+  color: black;
+  text-decoration: none;
+  text-align: center;
+}
+
+nav a:hover {
+  color: cornflowerblue;
+}
+
+main section {
+  background-color: white;
+  padding: 2rem;
+  margin: 2rem;
+
+  width: 100%;
+
+  border-radius: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  font-size: 1.1em;
+  padding: 0.4em;
+  border-radius: 0.5rem;
+  border: solid 1px rgba(128, 128, 128, 0.822);
+  text-align: center;
+}
+
+button {
+  padding: 0.7em;
+
+  border-radius: 0.3rem;
+  border: solid 1px rgba(128, 128, 128, 0.822);
+
+  background: cornflowerblue;
+  color: white;
+}
+
+select {
+  padding: 0.4em;
+
+  border-radius: 0.5rem;
+  border: solid 1px rgba(128, 128, 128, 0.822);
+
+  margin: 0.5rem;
+}

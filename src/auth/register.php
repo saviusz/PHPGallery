@@ -49,7 +49,7 @@ redirectIfErrors();
 try {
     $hash = md5($password);
 
-    $createStmt = $mysqli->prepare("INSERT INTO users(login, password, email, registered_at) VALUES (?,?,?,NOW())");
+    $createStmt = $mysqli->prepare("INSERT INTO users(login, password, email, registered_at, active) VALUES (?,?,?,NOW(), 1)");
     $createStmt->bind_param("sss", $login, $hash, $email);
     $createStmt->execute();
 } catch (Throwable $error) {

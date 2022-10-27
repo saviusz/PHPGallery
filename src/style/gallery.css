@@ -1,0 +1,95 @@
+main {
+  display: flex;
+  flex-direction: column;
+
+  margin: 2rem auto;
+
+  width: 85%;
+}
+
+.gallery {
+  margin: 0;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 2rem;
+
+  justify-items: center;
+}
+
+.image-wrapper {
+  height: 180px;
+  width: 180px;
+
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.08);
+
+  color: black;
+}
+
+.image-wrapper img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.image-wrapper .tooltip {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-auto-rows: auto;
+  column-gap: 0.5em;
+  row-gap: 0.3rem;
+
+  width: 300px;
+  padding: 1em;
+
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+
+  transform: translate(-50%, 50%);
+
+  background-color: white;
+
+  z-index: 1000;
+
+  border-radius: 0.5rem;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.08);
+  opacity: 1;
+}
+
+.image-wrapper:not(:hover) .tooltip {
+  opacity: 0;
+  /* display: none; */
+}
+
+.image-wrapper .tooltip > div {
+  display: contents;
+}
+
+.image-wrapper .tooltip .name {
+  grid-column: 1;
+  text-align: right;
+
+  font-weight: 900;
+}
+
+.image-wrapper .tooltip .name::after {
+  content: ":";
+}
+
+.image-wrapper .tooltip .value {
+  grid-column: -2;
+}
+
+.image-wrapper .tooltip .title {
+  grid-column: 1 / -1;
+  font-size: 1.2em;
+
+  text-align: center;
+}
+
+.sorting {
+  align-self: flex-end;
+}
