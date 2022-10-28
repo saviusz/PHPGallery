@@ -21,6 +21,21 @@ switch ($sort_value) {
 
 $sort_dir = $sort_dir == "asc" ? "ASC" : "DESC";
 
+$numberOnPage = 5;
+$page = $_GET["page"] ?: 1;
+
+$res = $mysqli->query("SELECT CEILING(COUNT(*) / $numberOnPage) as number FROM (
+    SELECT MIN(photos.id) as miniature
+    FROM photos
+    INNER JOIN albums
+    ON photos.albumId = albums.id
+    WHERE photos.isAccepted=1
+    GROUP BY albums.id
+) AS T");
+
+$numberOfPages = $res->fetch_assoc()["number"];
+
+$page = intval($page > $numberOfPages && $page < 1 ? 1 : $page);
 
 $stmt = $mysqli->prepare(
     "SELECT MIN(photos.id) as miniature,albums.id,albums.title,albums.authorId,albums.createdAt,users.login
@@ -31,9 +46,12 @@ $stmt = $mysqli->prepare(
     ON users.id = albums.authorId
     WHERE photos.isAccepted=1
     GROUP BY albums.id
-    ORDER BY $sort_value $sort_dir"
+    ORDER BY $sort_value $sort_dir
+    LIMIT ? OFFSET ?"
 );
+$startFrom = ($numberOnPage * ($page - 1));
 
+$stmt->bind_param("ii", $numberOnPage, $startFrom);
 $stmt->execute();
 $images = $stmt->get_result();
 
@@ -78,6 +96,13 @@ function value($val)
                 </a>
             <?php endwhile; ?>
         </section>
+        <div class="pagination">
+            <?php if ($page > 1) : ?> <button onclick="setPage(<?= $page - 1 ?>)">Poprzednia</button><?php endif ?>
+            <?php for ($iter = max(1, $page - 2); $iter < (min($page + 2, $numberOfPages) + 1); $iter++) : ?>
+                <button onclick="setPage(<?= $iter ?>)" class="<?= $page == $iter ? "selected" : "" ?>"><?= $iter ?></button>
+            <?php endfor;  ?>
+            <?php if ($page < $numberOfPages) : ?><button onclick="setPage(<?= $page + 1 ?>)">Następna</button><?php endif ?>
+        </div>
     </main>
 </body>
 
