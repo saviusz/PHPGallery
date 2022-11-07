@@ -1,6 +1,6 @@
 <?php
-session_start();
-$user = $_SESSION["loggedUser"];
+if (session_status() == PHP_SESSION_NONE) session_start();
+$user = $_SESSION["loggedUser"] ?? "";
 $isLogged = !empty($user);
 
 function hrefIsselected($href)
@@ -22,7 +22,7 @@ function hrefIsselected($href)
             <a href="/auth/logout.php">Wyloguj</a>
             <?php if ($user["role"] == "moderator" || $user["role"] == "admin") : ?>
                 <a href="/admin/">Panel administracyjny</a>
-            <? endif ?>
+            <?php endif ?>
         <?php else : ?>
             <a <?= hrefIsselected("/logreg.php") ?>>Zaloguj</a>
             <a <?= hrefIsselected("/logreg.php") ?>>Zarejestruj</a>

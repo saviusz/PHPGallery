@@ -1,8 +1,14 @@
 <?php
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+$dbHost = (getenv("DATABASE_HOST") ?? "localhost");
+$dbUser = (getenv("DATABASE_USER") ?? "root");
+$dbPass = (getenv("DATABASE_PASSWORD") ?? "");
+$dbName = (getenv("DATABASE_DB") ?? "");
+
 $mysqli = new mysqli(
-    $_ENV["DATABASE_HOST"],
-    $_ENV["DATABASE_USER"],
-    $_ENV["DATABASE_PASSWORD"],
-    $_ENV["DATABASE_DB"]
+    $dbHost,
+    $dbUser,
+    $dbPass,
+    $dbName
 );

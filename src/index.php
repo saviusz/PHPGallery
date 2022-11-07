@@ -2,7 +2,7 @@
 session_start();
 require_once("./common/mysqli.php");
 
-$sort = $_GET["sort"] ?: "title_asc";
+$sort = $_GET["sort"] ?? "title_asc";
 
 [$sort_value, $sort_dir] = explode("_", $sort);
 
@@ -21,8 +21,8 @@ switch ($sort_value) {
 
 $sort_dir = $sort_dir == "asc" ? "ASC" : "DESC";
 
-$numberOnPage = 5;
-$page = $_GET["page"] ?: 1;
+$numberOnPage = 20;
+$page = $_GET["page"] ?? 1;
 
 $res = $mysqli->query("SELECT CEILING(COUNT(*) / $numberOnPage) as number FROM (
     SELECT MIN(photos.id) as miniature
@@ -31,7 +31,7 @@ $res = $mysqli->query("SELECT CEILING(COUNT(*) / $numberOnPage) as number FROM (
     ON photos.albumId = albums.id
     WHERE photos.isAccepted=1
     GROUP BY albums.id
-) AS T");
+) as T");
 
 $numberOfPages = $res->fetch_assoc()["number"];
 
@@ -87,7 +87,7 @@ function value($val)
         <section class="gallery">
             <?php while ($row = $images->fetch_assoc()) : ?>
                 <a href="<?= "/album.php?id={$row["id"]}" ?>" class="image-wrapper">
-                    <img src="<?= "/photo/{$row["id"]}/{$row["miniature"]}.jpg" ?>" alt="">
+                    <img src="<?= "/photo/{$row["id"]}/{$row["miniature"]}.png" ?>" alt="">
                     <div class="tooltip">
                         <div><span class="title"><?= $row["title"] ?></span></div>
                         <div><span class="name">Utworzony</span><span class="value"><?= $row["createdAt"] ?></span></div>

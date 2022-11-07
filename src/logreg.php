@@ -21,15 +21,27 @@ if (!empty($_SESSION["loggedUser"])) {
         <section class="register-form">
             <h1>Zarejestruj się</h1>
             <form action="./auth/register.php" method="post">
-                <div><span class="name">Login</span><input type="text" name="login" id="login"></div>
-                <div><span class="name">Hasło</span><input type="password" name="password" id="password"></div>
-                <div><span class="name">Powtórz hasło</span><input type="password" name="rpassword" id="rpassword"></div>
-                <div><span class="name">Email</span><input type="email" name="email" id="email"></div>
+                <div>
+                    <span class="name">Login</span>
+                    <input type="text" name="login" id="login" required minlength="8" maxlength="16">
+                </div>
+                <div>
+                    <span class="name">Hasło</span>
+                    <input type="password" name="password" id="password" required minlength="8" maxlength="20">
+                </div>
+                <div>
+                    <span class="name">Powtórz hasło</span>
+                    <input type="password" name="rpassword" id="rpassword" required>
+                </div>
+                <div>
+                    <span class="name">Email</span>
+                    <input type="email" name="email" id="email" required>
+                </div>
                 <button type="submit">Zarejestruj</button>
             </form>
             <div class="errors">
                 <?php
-                $errors = $_SESSION["reg_errors"];
+                $errors = $_SESSION["reg_errors"] ?? [];
                 if (is_array($errors)) {
                     foreach ($errors as $error) {
                 ?>
@@ -45,13 +57,13 @@ if (!empty($_SESSION["loggedUser"])) {
         <section class="login-form">
             <h1>Zaloguj się</h1>
             <form action="./auth/login.php" method="post">
-                <div><span class="name">Login</span><input type="text" name="login" id="login"></div>
-                <div><span class="name">Hasło</span><input type="password" name="password" id="password"></div>
+                <div><span class="name">Login</span><input type="text" name="login" id="login" required></div>
+                <div><span class="name">Hasło</span><input type="password" name="password" id="password" required></div>
                 <button type="submit">Zaloguj</button>
             </form>
             <div class="errors">
                 <?php
-                $errors = $_SESSION["login_errors"];
+                $errors = $_SESSION["login_errors"] ?? [];
                 if (is_array($errors)) {
                     foreach ($errors as $error) {
                 ?>
