@@ -41,7 +41,7 @@ redirectIfErrors();
 
 $_SESSION["loggedUser"] = $user;
 
-header("Location: /");
+header("Location: ../");
 exit();
 
 function issetGuard($name, $message)
@@ -57,7 +57,7 @@ function redirectIfErrors()
     global $errors;
     $_SESSION["login_errors"] = $errors ?? [];
     if (sizeof($errors) > 0) {
-        header("Location: /logreg.php");
+        header("Location: ../logreg.php");
         exit();
     }
 }

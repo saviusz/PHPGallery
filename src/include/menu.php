@@ -5,7 +5,7 @@ $isLogged = !empty($user);
 
 function hrefIsselected($href)
 {
-    return "href=$href class=" . (parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH) == $href ? "selected" : "");
+    return "href=.$href class=" . (parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH) == $href ? "selected" : "");
 }
 
 ?>

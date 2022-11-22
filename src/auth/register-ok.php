@@ -10,7 +10,7 @@
 
 <body>
     <?php include("../include/menu.php") ?>
-    Udało Ci się zarejestrować. Przejdź do strony <a href="/">Głównej</a>
+    Udało Ci się zarejestrować. Przejdź do strony <a href="../">Głównej</a>
     <?php include "../include/footer.php" ?>
 </body>
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!empty($_SESSION["loggedUser"])) {
-    header("Location: /");
+    header("Location: ./");
     exit();
 }
 ?>
@@ -11,8 +11,9 @@ if (!empty($_SESSION["loggedUser"])) {
 
 <head>
     <?php include "./include/headers.php" ?>
-    <link rel="stylesheet" href="/style/logreg.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="./style/logreg.css">
+    <title>Zaloguj | Zarejestruj</title>
+    <script src="javascript/logreg.js" defer></script>
 </head>
 
 <body>

@@ -47,6 +47,13 @@ html {
   transition: all 150ms ease-in-out;
 }
 
+footer {
+  width: 100%;
+  padding: 1rem;
+
+  text-align: center;
+}
+
 .menu {
   display: block;
   position: sticky;
