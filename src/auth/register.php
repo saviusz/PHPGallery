@@ -61,7 +61,7 @@ $stmt->execute();
 
 $_SESSION["loggedUser"] = $stmt->get_result()->fetch_assoc();
 
-header("Location: /auth/register-ok.php");
+header("Location: ../auth/register-ok.php");
 exit();
 
 function issetGuard($name, $message)
@@ -101,7 +101,7 @@ function redirectIfErrors()
     global $errors;
     $_SESSION["reg_errors"] = $errors ?? [];
     if (sizeof($errors) > 0) {
-        header("Location: /logreg.php");
+        header("Location: ../logreg.php");
         exit();
     }
 }

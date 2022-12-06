@@ -4,6 +4,23 @@ if (empty($_SESSION["loggedUser"])) {
     header("Location: ./logreg.php");
     exit();
 }
+
+require_once("./common/mysqli.php");
+
+if (empty($_GET["album"])){
+
+$stmt = $mysqli->prepare(
+    "SELECT albums.id,albums.title
+    FROM albums
+    WHERE albums.authorId=?
+    ORDER BY $sort_value $sort_dir
+    LIMIT ? OFFSET ?"
+);
+$stmt->bind_param("ii", $numberOnPage, $startFrom);
+$stmt->execute();
+$albums = $stmt->get_result();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -48,4 +65,4 @@ if (empty($_SESSION["loggedUser"])) {
 </html>
 
 <?php
-$_SESSION["album_errors"] = array();
+$_SESSION["photo_errors"] = array();
