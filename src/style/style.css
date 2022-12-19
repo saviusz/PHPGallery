@@ -108,7 +108,8 @@ main section {
   align-items: center;
 }
 
-input {
+input,
+textarea {
   font-size: 1.1em;
   padding: 0.4em;
   border-radius: 0.5rem;
@@ -117,6 +118,12 @@ input {
 
   color: var(--c-on-surface);
   background-color: var(--c-background);
+
+  resize: vertical;
+}
+
+textarea {
+  min-height: 6rem;
 }
 
 input:autofill {

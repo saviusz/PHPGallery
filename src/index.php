@@ -87,7 +87,7 @@ function value($val)
         <section class="gallery">
             <?php while ($row = $images->fetch_assoc()) : ?>
                 <a href="<?= "./album.php?id={$row["id"]}" ?>" class="image-wrapper">
-                    <img src="<?= "./photo/{$row["id"]}/{$row["miniature"]}.png" ?>" alt="">
+                    <img src="<?= "./photo/{$row["id"]}/{$row["miniature"]}.min.webp" ?>" alt="">
                     <div class="tooltip">
                         <div><span class="title"><?= $row["title"] ?></span></div>
                         <div><span class="name">Utworzony</span><span class="value"><?= $row["createdAt"] ?></span></div>

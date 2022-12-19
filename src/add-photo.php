@@ -7,19 +7,14 @@ if (empty($_SESSION["loggedUser"])) {
 
 require_once("./common/mysqli.php");
 
-if (empty($_GET["album"])){
-
 $stmt = $mysqli->prepare(
     "SELECT albums.id,albums.title
     FROM albums
-    WHERE albums.authorId=?
-    ORDER BY $sort_value $sort_dir
-    LIMIT ? OFFSET ?"
+    WHERE albums.authorId=?"
 );
-$stmt->bind_param("ii", $numberOnPage, $startFrom);
+$stmt->bind_param("i", $_SESSION["loggedUser"]["id"]);
 $stmt->execute();
 $albums = $stmt->get_result();
-}
 
 ?>
 
@@ -28,6 +23,7 @@ $albums = $stmt->get_result();
 
 <head>
     <?php include "./include/headers.php" ?>
+    <link rel="stylesheet" href="./style/gallery.css">
     <link rel="stylesheet" href="./style/logreg.css">
     <title>Dodaj album</title>
 </head>
@@ -35,29 +31,75 @@ $albums = $stmt->get_result();
 <body>
     <?php include("./include/menu.php") ?>
     <main>
-        <section class="register-form">
-            <h1>Załóż album</h1>
-            <form action="./files/add-album.php" method="post">
-                <div>
-                    <span class="name">Nazwa</span>
-                    <input type="text" name="title" id="title" required minlength="1" maxlength="100">
-                </div>
-                <button type="submit">Dodaj album</button>
-            </form>
-            <div class="errors">
+        <?php if (empty($_GET["album"])) : ?>
+            <section class="album-form">
                 <?php
-                $errors = $_SESSION["album_errors"] ?? [];
-                if (is_array($errors)) {
-                    foreach ($errors as $error) {
-                ?>
-                        <div><?= $error ?></div>
-                <?php
-                    }
-                }
+                if ($albums->num_rows == 1) {
+                    $album = $albums->fetch_assoc();
+                    header('Location: add-photo.php?album=' . $album['id']);
+                    exit;
+                } else while ($album = $albums->fetch_assoc()) : ?>
 
+                    <a href="?album=<?= $album["id"] ?>"><?= $album["title"] ?></a>
+                <?php endwhile; ?>
+            </section>
+        <?php else : ?>
+            <?php
+            $albumId = $_GET["album"];
+
+            $stmt = $mysqli->prepare(
+                "SELECT albums.id,albums.title
+                    FROM albums
+                    WHERE albums.authorId=? AND albums.id=?"
+            );
+            $stmt->bind_param("ii", $_SESSION["loggedUser"]["id"], $albumId);
+            $stmt->execute();
+            $albumsOfId = $stmt->get_result();
+            if ($albumsOfId->num_rows != 1) {
+                header('Location: add-photo.php');
+                exit;
+            }
+            ?>
+            <section class="photo-form">
+                <form action="./files/add-photo.php" method="post" enctype="multipart/form-data">
+                    <div>
+                        <span class="name">Plik</span>
+                        <input type="file" name="photo" id="photo" accept="image/*" required>
+                    </div>
+                    <div>
+                        <span class="name">Opis</span>
+                        <textarea name="description" id="descrtipion" maxlength="255"></textarea>
+                    </div>
+                    <input type="hidden" name="album" value="<?= $albumId ?>">
+                    <button type="submit">Dodaj zdjęcie</button>
+                </form>
+                <div class="errors">
+                    <?php
+                    $errors = $_SESSION["photo_errors"] ?? [];
+                    if (is_array($errors)) foreach ($errors as $error) : ?>
+                        <div><?= $error ?></div>
+                    <?php endforeach; ?>
+                </div>
+            </section>
+            <section class="gallery">
+                <?php
+                $imagesStmt = $mysqli->prepare(
+                    "SELECT photos.id
+                    FROM photos
+                    WHERE albumId=?
+                    ORDER BY photos.createdAt DESC"
+                );
+                $imagesStmt->bind_param("i", $albumId);
+                $imagesStmt->execute();
+                $images = $imagesStmt->get_result();
+                while ($image = $images->fetch_assoc()) :
                 ?>
-            </div>
-        </section>
+                    <div class="image-wrapper">
+                        <img src="<?= "./photo/{$albumId}/{$image["id"]}.min.webp" ?>" alt="">
+                    </div>
+                <?php endwhile; ?>
+            </section>
+        <?php endif; ?>
     </main>
     <?php include "./include/footer.php" ?>
 </body>
