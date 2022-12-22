@@ -25,47 +25,10 @@ main section {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  width: 100%;
 }
 
 h1 {
   margin-top: 0;
-}
-
-form {
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-auto-rows: auto;
-  column-gap: 0.5em;
-  row-gap: 0.7rem;
-  align-items: center;
-}
-
-form > div {
-  display: contents;
-}
-
-form .name {
-  grid-column: 1;
-  text-align: right;
-}
-
-form .name::after {
-  content: ":";
-}
-
-form .value {
-  grid-column: -2;
-}
-
-form button {
-  grid-column: 1 / -1;
-}
-
-.errors {
-  color: red;
-  padding: 1rem;
-
-  width: 70%;
-
-  text-align: center;
 }

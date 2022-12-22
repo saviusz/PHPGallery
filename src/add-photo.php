@@ -23,8 +23,8 @@ $albums = $stmt->get_result();
 
 <head>
     <?php include "./include/headers.php" ?>
+    <link rel="stylesheet" href="./style/add-photo.css">
     <link rel="stylesheet" href="./style/gallery.css">
-    <link rel="stylesheet" href="./style/logreg.css">
     <title>Dodaj album</title>
 </head>
 
@@ -32,6 +32,7 @@ $albums = $stmt->get_result();
     <?php include("./include/menu.php") ?>
     <main>
         <?php if (empty($_GET["album"])) : ?>
+            <h1>Wybierz album:</h1>
             <section class="album-form">
                 <?php
                 if ($albums->num_rows == 1) {
@@ -60,6 +61,7 @@ $albums = $stmt->get_result();
                 exit;
             }
             ?>
+            <h1>Dodaj zdjęcie do albumu <?= $albumsOfId->fetch_assoc()["title"] ?></h1>
             <section class="photo-form">
                 <form action="./files/add-photo.php" method="post" enctype="multipart/form-data">
                     <div>

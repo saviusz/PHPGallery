@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+body {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    position: relative;
+    height: 100%;
+
+    margin: 0;
+}
+
+.image {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    max-height: 90%;
+    max-width: 90%;
+
+    object-fit: contain;
+
+    box-shadow: 4px 4px 6px 0px #0006;
+}
+
+.background {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+
+    z-index: -1000;
+}
+
+.background>* {
+    object-fit: cover;
+
+    width: 100%;
+    height: 100%;
+
+    filter: blur(10px) opacity(80%);
+
+    scale: 1.2;
+}
+
+.content {
+    position: absolute;
+    inset: 0;
+
+    padding: 1rem;
+
+    background: linear-gradient(180deg, transparent 75%, var(--c-background) 100%);
+}
+
+.info {
+    position: absolute;
+    bottom: 0;
+    left: 2rem;
+
+    max-width: 50%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+
+}
+
+.info>* {
+    margin: 0;
+}
+
+.info>h2 {
+    opacity: 75%;
+}
+
+.info .author {
+    opacity: 60%;
+}
+
+#stars {
+
+    --star-size: 2.5rem;
+    --star-color: rgb(114, 114, 114);
+    --star-background: #fc0;
+
+    --percent: 0;
+    display: inline-block;
+    font-size: var(--star-size);
+    font-family: Times;
+    line-height: 1;
+    width: min-content;
+}
+
+#stars::before {
+    content: "★★★★★";
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

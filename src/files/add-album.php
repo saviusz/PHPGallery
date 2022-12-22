@@ -33,7 +33,7 @@ try {
 
 mkdir("../photo/$createStmt->insert_id");
 
-header("Location: ../add-photo.php");
+header("Location: ../add-photo.php?album=" . $createStmt->insert_id);
 exit();
 
 // Functions

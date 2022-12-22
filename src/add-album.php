@@ -11,7 +11,6 @@ if (empty($_SESSION["loggedUser"])) {
 
 <head>
     <?php include "./include/headers.php" ?>
-    <link rel="stylesheet" href="./style/logreg.css">
     <title>Dodaj album</title>
 </head>
 
