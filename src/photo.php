@@ -14,7 +14,7 @@ $stmt = $mysqli->prepare(
     FROM photos
     JOIN albums ON photos.albumId = albums.id
     JOIN users ON albums.authorId = users.id
-    WHERE photos.albumId=? AND photos.isAccepted=1"
+    WHERE photos.id=? AND photos.isAccepted=1"
 );
 
 $stmt->bind_param("i", $id);
@@ -42,8 +42,6 @@ $imagePath = "./photo/{$image["albumId"]}/{$image["id"]}";
             <img src="<?= $imagePath ?>.min.webp" alt="elo">
         </div>
         <div class="content">
-
-            <?php var_export($image) ?>
 
             <div class="info">
                 <p><?= $image["description"] ?></p>

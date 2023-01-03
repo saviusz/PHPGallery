@@ -6,13 +6,19 @@ body {
 
     display: flex;
     flex-direction: column;
+    
 }
 
 main {
     position: relative;
     height: 100%;
-
+    
     margin: 0;
+    
+}
+
+main,footer {
+    --c-background: hsl(0, 0%, 10%);
 }
 
 .image {
@@ -55,6 +61,7 @@ main {
     inset: 0;
 
     padding: 1rem;
+
 
     background: linear-gradient(180deg, transparent 75%, var(--c-background) 100%);
 }

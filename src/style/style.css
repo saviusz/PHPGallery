@@ -64,10 +64,20 @@ footer {
   padding: 1rem;
 
   text-align: center;
+
+  background-color: var(--c-background);
 }
 
 h1 {
   margin-block: 0;
+}
+
+a {
+  color: var(--c-vibrant);
+}
+
+a:hover {
+  color: var(--c-lite);
 }
 
 .menu {

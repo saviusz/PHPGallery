@@ -9,7 +9,7 @@ if (empty($_GET["id"])) {
 
 $id = $_GET["id"];
 
-$numberOnPage = 2;
+$numberOnPage = 20;
 $page = $_GET["page"] ?? 1;
 
 $numberStmt = $mysqli->prepare(
@@ -46,6 +46,7 @@ $images = $stmt->get_result();
     <link rel="stylesheet" href="./style/gallery.css">
     <link rel="stylesheet" href="./style/album.css">
     <title>Galeria</title>
+    <script src="./javascript/gallery.js"></script>
 </head>
 
 <body>
