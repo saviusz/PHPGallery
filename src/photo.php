@@ -42,11 +42,26 @@ $imagePath = "./photo/{$image["albumId"]}/{$image["id"]}";
             <img src="<?= $imagePath ?>.min.webp" alt="elo">
         </div>
         <div class="content">
+            <a href="./album.php?id=<?= $image["albumId"]?>">Wróć do albumów</a>
 
             <div class="info">
                 <p><?= $image["description"] ?></p>
                 <h2><?= $image["title"] ?> - <span class="author"><?= $image["login"] ?></span></h2>
                 <div id="stars" data-rating=0 data-id="<?= $image["id"] ?>"></div>
+            </div>
+            <div class="comments_container">
+                <div class="comments">
+                    <?php for ($i = 0; $i < 16; $i++) : ?>
+                        <div class="comment">
+                            <span class="author">Człowiek</span>
+                            trochę komentarza idzie tutaj potrzebu trochę kometrzebu tro chę komenta rza idzie tuta j potrzebu
+                        </div>
+                        <?php endfor; ?>
+                </div>
+            <form class="comment_inputs">
+                <input type="text" name="comment">
+                <button>Dodaj</button>
+            </form>
             </div>
         </div>
     </main>

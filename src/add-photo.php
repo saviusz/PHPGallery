@@ -35,7 +35,11 @@ $albums = $stmt->get_result();
             <h1>Wybierz album:</h1>
             <section class="album-form">
                 <?php
-                if ($albums->num_rows == 1) {
+                if ($albums->num_rows == 0){
+                    header('Location: add-album.php');
+                    exit;
+                }              
+                elseif ($albums->num_rows == 1) {
                     $album = $albums->fetch_assoc();
                     header('Location: add-photo.php?album=' . $album['id']);
                     exit;

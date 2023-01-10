@@ -1,115 +1,205 @@
 @charset "UTF-8";
 
 body {
-    position: fixed;
-    inset: 0;
+  position: fixed;
+  inset: 0;
 
-    display: flex;
-    flex-direction: column;
-    
+  display: flex;
+  flex-direction: column;
 }
 
 main {
-    position: relative;
-    height: 100%;
-    
-    margin: 0;
-    
+  position: relative;
+  height: 100%;
+
+  margin: 0;
 }
 
-main,footer {
-    --c-background: hsl(0, 0%, 10%);
+main,
+footer {
+  --c-background: hsl(0, 0%, 10%);
 }
 
 .image {
-    position: absolute;
-    left: 50%;
-    top: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
 
-    transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 
-    max-height: 90%;
-    max-width: 90%;
+  max-height: 90%;
+  max-width: 90%;
 
-    object-fit: contain;
+  object-fit: contain;
 
-    box-shadow: 4px 4px 6px 0px #0006;
+  box-shadow: 4px 4px 6px 0px #0006;
 }
 
 .background {
-    position: absolute;
-    inset: 0;
+  position: absolute;
+  inset: 0;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    z-index: -1000;
+  z-index: -1000;
 }
 
-.background>* {
-    object-fit: cover;
+.background > * {
+  object-fit: cover;
 
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 
-    filter: blur(10px) opacity(80%);
+  filter: blur(10px) opacity(80%);
 
-    scale: 1.2;
+  scale: 1.2;
 }
 
 .content {
-    position: absolute;
-    inset: 0;
+  position: absolute;
+  inset: 0;
 
-    padding: 1rem;
+  padding: 15px; 
 
-
-    background: linear-gradient(180deg, transparent 75%, var(--c-background) 100%);
+  background: linear-gradient(
+    180deg,
+    transparent 75%,
+    var(--c-background) 100%
+  );
 }
 
 .info {
-    position: absolute;
-    bottom: 0;
-    left: 2rem;
+  position: absolute;
+  bottom: 0;
+  left: 2rem;
 
-    max-width: 50%;
+  max-width: 50%;
 
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-
-
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.info>* {
-    margin: 0;
+.info > * {
+  margin: 0;
 }
 
-.info>h2 {
-    opacity: 75%;
+.info > h2 {
+  opacity: 75%;
 }
 
 .info .author {
-    opacity: 60%;
+  opacity: 60%;
 }
 
 #stars {
+  --star-size: 2.5rem;
+  --star-color: rgb(114, 114, 114);
+  --star-background: #fc0;
 
-    --star-size: 2.5rem;
-    --star-color: rgb(114, 114, 114);
-    --star-background: #fc0;
-
-    --percent: 0;
-    display: inline-block;
-    font-size: var(--star-size);
-    font-family: Times;
-    line-height: 1;
-    width: min-content;
+  --percent: 0;
+  display: inline-block;
+  font-size: var(--star-size);
+  font-family: Times;
+  line-height: 1;
+  width: min-content;
 }
 
 #stars::before {
-    content: "★★★★★";
-    letter-spacing: 3px;
-    background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  content: "★★★★★";
+  letter-spacing: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--star-background) var(--percent),
+    var(--star-color) var(--percent)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.comments_container {
+  position: absolute;
+  bottom: 0;
+  right: 2rem;
+
+  width: 40%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.comments {
+  max-height: 50vh;
+
+  display: flex;
+  flex-direction: column-reverse;
+
+  gap: 5px;
+
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+
+  transition: all 1s ;
+
+  -webkit-mask-image: linear-gradient(to bottom, transparent 80%, black 100%);
+  mask-image: linear-gradient(to bottom, transparent 25%, black 100%);
+}
+
+.comments:hover{
+    -webkit-mask-image: linear-gradient(to bottom, transparent 10%, black 15%);
+    mask-image: linear-gradient(to bottom, transparent 10%, black 15%);
+}
+
+.comment {
+  padding: 0.25em 0.5em;
+
+  color: rgb(160, 160, 160);
+  background-color: rgba(32, 32, 32, 0.315);
+
+  border-radius: 10px;
+
+  overflow-anchor: auto;
+
+  scroll-snap-align: end;
+}
+
+.comment .author {
+  color: rgb(255, 255, 255);
+}
+
+.comment_inputs {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.comment_inputs input {
+  flex: 1;
+}
+
+.comment_inputs button {
+  width: 20%;
+}
+
+
+main a {
+    display: inline-block;
+
+    color: var(--c-vibrant);
+    background-color: var(--c-surface);
+
+    text-decoration: none;
+
+    border-radius: 5px;
+
+    width: max-content;
+    padding: .5rem;
+}
+
+main a:hover {
+    color: var(--c-lite);
+    background-color: var(--c-surface-variant);
 }
