@@ -59,7 +59,7 @@ footer {
   position: absolute;
   inset: 0;
 
-  padding: 15px; 
+  padding: 15px;
 
   background: linear-gradient(
     180deg,
@@ -90,6 +90,14 @@ footer {
 
 .info .author {
   opacity: 60%;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0.5em;
 }
 
 #stars {
@@ -126,11 +134,11 @@ footer {
 
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 0.5rem;
 }
 
 .comments {
-  max-height: 50vh;
+  height: 50vh;
 
   display: flex;
   flex-direction: column-reverse;
@@ -140,15 +148,15 @@ footer {
   overflow-y: auto;
   scroll-snap-type: y mandatory;
 
-  transition: all 1s ;
+  transition: all 1s;
 
   -webkit-mask-image: linear-gradient(to bottom, transparent 80%, black 100%);
   mask-image: linear-gradient(to bottom, transparent 25%, black 100%);
 }
 
-.comments:hover{
-    -webkit-mask-image: linear-gradient(to bottom, transparent 10%, black 15%);
-    mask-image: linear-gradient(to bottom, transparent 10%, black 15%);
+.comments:hover {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 10%, black 15%);
+  mask-image: linear-gradient(to bottom, transparent 10%, black 15%);
 }
 
 .comment {
@@ -164,8 +172,13 @@ footer {
   scroll-snap-align: end;
 }
 
-.comment .author {
+.comment_heading {
   color: rgb(255, 255, 255);
+}
+
+.comment_heading .date {
+  font-size: 0.8em;
+  opacity: 0.7;
 }
 
 .comment_inputs {
@@ -184,22 +197,27 @@ footer {
   width: 20%;
 }
 
+.errors {
+  padding: 0;
+  text-align: left;
+  font-size: 0.8em;
+}
 
 main a {
-    display: inline-block;
+  display: inline-block;
 
-    color: var(--c-vibrant);
-    background-color: var(--c-surface);
+  color: var(--c-vibrant);
+  background-color: var(--c-surface);
 
-    text-decoration: none;
+  text-decoration: none;
 
-    border-radius: 5px;
+  border-radius: 5px;
 
-    width: max-content;
-    padding: .5rem;
+  width: max-content;
+  padding: 0.5rem;
 }
 
 main a:hover {
-    color: var(--c-lite);
-    background-color: var(--c-surface-variant);
+  color: var(--c-lite);
+  background-color: var(--c-surface-variant);
 }
