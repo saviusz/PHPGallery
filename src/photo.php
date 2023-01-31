@@ -10,10 +10,17 @@ if (empty($_GET["id"])) {
 $id = $_GET["id"];
 
 $stmt = $mysqli->prepare(
-    "SELECT photos.id,photos.description,photos.albumId,albums.title,users.login
+    "SELECT photos.id,
+    photos.description,
+    photos.albumId,
+    albums.title,
+    users.login,
+    ROUND(AVG(photos_ratings.rating),2) as rating,
+    COUNT(photos_ratings.rating) as ratings_number
     FROM photos
     JOIN albums ON photos.albumId = albums.id
     JOIN users ON albums.authorId = users.id
+    JOIN photos_ratings ON photos_ratings.photoId = photos.id
     WHERE photos.id=? AND photos.isAccepted=1"
 );
 
@@ -35,6 +42,12 @@ $commentsStmt->bind_param("i", $id);
 $commentsStmt->execute();
 
 $comments = $commentsStmt->get_result();
+
+$userRatingStmt = $mysqli->prepare("SELECT rating FROM photos_ratings WHERE photoId=? AND userId=?");
+$userRatingStmt->bind_param("ii", $id, $_SESSION["loggedUser"]["id"]);
+$userRatingStmt->execute();
+
+$userRating = $userRatingStmt->get_result()->fetch_assoc()["rating"];
 ?>
 
 <!DOCTYPE html>
@@ -61,8 +74,8 @@ $comments = $commentsStmt->get_result();
                 <p><?= $image["description"] ?></p>
                 <h2><?= $image["title"] ?> - <span class="author"><?= $image["login"] ?></span></h2>
                 <div class="rating">
-                    <div id="stars" data-rating=0 data-id="<?= $image["id"] ?>"></div>
-                    <div>4.3 / 10 (16)</div>
+                    <div id="stars" data-rating=<?= $userRating ?> data-id="<?= $image["id"] ?>"></div>
+                    <div><?= $image["rating"] ?> / 10 (<?= $image["ratings_number"] ?>)</div>
                 </div>
             </div>
             <div class="comments_container">
