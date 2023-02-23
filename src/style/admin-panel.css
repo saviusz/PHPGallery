@@ -1,0 +1,65 @@
+:root {
+  --w-sidebar: 6cm;
+}
+
+main {
+  margin-left: calc(var(--w-sidebar) + 15px);
+}
+
+nav {
+  position: fixed;
+  left: 0;
+  top: 2rem;
+
+  width: var(--w-sidebar);
+
+  padding: 0.1rem;
+  margin-inline: 0.5rem;
+
+  background-color: var(--c-surface);
+
+  border-radius: 5px;
+}
+
+nav > section {
+  display: flex;
+  flex-direction: column;
+}
+
+nav a {
+  display: block;
+
+  padding: 0.5rem;
+  margin: 5px;
+
+  border-radius: 5px;
+}
+
+nav a:hover {
+  background-color: var(--c-surface-variant);
+  color: var(--c-lite);
+}
+
+nav h3 {
+  font-size: 1rem;
+  padding-left: 1rem;
+  margin: 0;
+  margin-top: 0.5rem;
+
+  color: var(--outline);
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+
+  width: 100%;
+}
+
+.table > div {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}

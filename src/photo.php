@@ -47,7 +47,9 @@ $userRatingStmt = $mysqli->prepare("SELECT rating FROM photos_ratings WHERE phot
 $userRatingStmt->bind_param("ii", $id, $_SESSION["loggedUser"]["id"]);
 $userRatingStmt->execute();
 
-$userRating = $userRatingStmt->get_result()->fetch_assoc()["rating"];
+$userRatingResult = $userRatingStmt->get_result();
+
+$userRating = $userRatingResult->num_rows > 0 ? $userRatingResult->fetch_assoc()["rating"] : 0;
 ?>
 
 <!DOCTYPE html>
