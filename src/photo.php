@@ -47,7 +47,11 @@ $userRatingStmt = $mysqli->prepare("SELECT rating FROM photos_ratings WHERE phot
 $userRatingStmt->bind_param("ii", $id, $_SESSION["loggedUser"]["id"]);
 $userRatingStmt->execute();
 
-$userRating = $userRatingStmt->get_result()->fetch_assoc()["rating"];
+
+$userRatingResult = $userRatingStmt->get_result();
+
+
+$userRating = $userRatingResult->num_rows < 1 ? 0 :  $userRatingResult->fetch_assoc()["rating"];
 ?>
 
 <!DOCTYPE html>
@@ -75,7 +79,7 @@ $userRating = $userRatingStmt->get_result()->fetch_assoc()["rating"];
                 <h2><?= $image["title"] ?> - <span class="author"><?= $image["login"] ?></span></h2>
                 <div class="rating">
                     <div id="stars" data-rating=<?= $userRating ?> data-id="<?= $image["id"] ?>"></div>
-                    <div><?= $image["rating"] ?> / 10 (<?= $image["ratings_number"] ?>)</div>
+                    <div><?= $image["rating"] ?: 0 ?> / 10 (<?= $image["ratings_number"] ?>)</div>
                 </div>
             </div>
             <div class="comments_container">

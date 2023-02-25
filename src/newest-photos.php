@@ -20,7 +20,7 @@ $images = $stmt->get_result();
 <head>
     <?php include "./include/headers.php" ?>
     <link rel="stylesheet" href="./style/gallery.css">
-    <title>Najlepsze zdjęcia</title>
+    <title>Najnowsze zdjęcia</title>
     <script src="./javascript/gallery.js"></script>
 </head>
 
