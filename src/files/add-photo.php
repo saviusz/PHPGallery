@@ -24,7 +24,7 @@ $albumId = $_POST["album"];
 
 if (!empty($_POST["desc"])) {
     $desc = trim($_POST["desc"]);
-    maxLengthGuard($title, 255, "Opis musi być krótszy niż 255 znaków");
+    maxLengthGuard($desc, 255, "Opis musi być krótszy niż 255 znaków");
 
     redirectIfErrors();
 }

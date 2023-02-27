@@ -22,7 +22,7 @@ $id = $_POST["id"];
 $comment = $_POST["comment"];
 
 try {
-    $createStmt = $mysqli->prepare("INSERT INTO photos_comments(photoId,authorId,createdAt,content,isAccepted) VALUES (?,?,NOW(),?,1)");
+    $createStmt = $mysqli->prepare("INSERT INTO photos_comments(photoId,authorId,createdAt,content,isAccepted) VALUES (?,?,NOW(),?,0)");
     $createStmt->bind_param("iis", $id, $_SESSION["loggedUser"]["id"], $comment);
     $createStmt->execute();
 } catch (Throwable $error) {
