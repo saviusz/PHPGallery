@@ -32,7 +32,7 @@ if (empty($_SESSION["loggedUser"])) {
         </section>
         <section>
             <h3> Inne strony </h3>
-            <a href="./admin.php">Panel admina</a>
+            <?php if ($_SESSION["loggedUser"]["role"] != "user") : ?><a href="./admin.php">Panel admina</a><?php endif; ?>
             <a href="./index.php">Strona główna</a>
         </section>
     </nav>
@@ -97,7 +97,10 @@ if (empty($_SESSION["loggedUser"])) {
                         <button onclick="changeAlbumTitle(<?= $album['id'] ?>, '<?= $album['title'] ?>' )">Zmień nazwę</button>
                         <button onclick="deleteAlbum(<?= $album['id'] ?>)">Usuń album</button>
                     </div>
-                <?php endwhile; ?>
+                <?php endwhile;
+                if ($albums->num_rows < 1) : ?>
+                    Brak albumów do pokazania
+                <?php endif; ?>
             </div>
         </section>
         <?php

@@ -154,7 +154,7 @@ if ($_SESSION["loggedUser"]["role"] != "admin" && $_SESSION["loggedUser"]["role"
                             <span class="subtitle"><?= $comment["login"] ?></span>
                         </div>
                         <?php if ($_SESSION["loggedUser"]["role"] == "admin") : ?>
-                            <button onclick="editComment(<?= $comment['id'] ?>)">Edytuj komentarz</button>
+                            <button onclick="modifyComment(<?= $comment['id'] ?>,'<?= $comment['content'] ?>')">Edytuj komentarz</button>
                         <?php endif; ?>
                         <?php if (!$comment["isAccepted"]) : ?>
                             <button onclick="acceptComment(<?= $comment['id'] ?>)">Akceptuj komentarz</button>

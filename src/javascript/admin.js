@@ -98,6 +98,24 @@ async function acceptComment(id) {
   }).then((x) => location.reload());
 }
 
+async function modifyComment(id, def) {
+  const newContent = prompt("Podaj nową treść", def);
+
+  if (newContent) {
+    const params = new URLSearchParams();
+    params.append("id", id);
+    params.append("content", newContent);
+
+    await fetch("./files/modify-comment.php", {
+      method: "post",
+      body: params,
+    })
+      .then((x) => x.text())
+      .then(console.log)
+      .then((x) => location.reload());
+  }
+}
+
 async function blockUser(id) {
   const params = new URLSearchParams();
   params.append("id", id);
