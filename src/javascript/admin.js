@@ -28,6 +28,7 @@ async function deleteAlbum(id) {
       body: params,
     })
       .then((x) => x.text())
+      .then(console.log)
       .then((x) => location.reload());
   }
 }
@@ -100,6 +101,7 @@ async function acceptComment(id) {
 async function blockUser(id) {
   const params = new URLSearchParams();
   params.append("id", id);
+  params.append("state", "0");
 
   await fetch("./files/block-user.php", {
     method: "post",
@@ -110,11 +112,40 @@ async function blockUser(id) {
 async function unblockUser(id) {
   const params = new URLSearchParams();
   params.append("id", id);
+  params.append("state", "1");
 
-  await fetch("./files/unblock-user.php", {
+  await fetch("./files/block-user.php", {
     method: "post",
     body: params,
   }).then((x) => location.reload());
+}
+
+async function deleteUser(id) {
+  const sure = confirm("Jesteś pewny, że chcesz usunąć tego użytkownika?");
+
+  if (sure) {
+    const params = new URLSearchParams();
+    params.append("id", id);
+
+    await fetch("./files/delete-user.php", {
+      method: "post",
+      body: params,
+    }).then((x) => location.reload());
+  }
+}
+
+async function changeUserRole(id, elem) {
+  const params = new URLSearchParams();
+  params.append("id", id);
+  params.append("role", elem.value);
+
+  await fetch("./files/modify-user-role.php", {
+    method: "post",
+    body: params,
+  })
+    .then((x) => x.text())
+    .then(console.log)
+    .then((x) => location.reload());
 }
 
 function changeAlbum(element) {

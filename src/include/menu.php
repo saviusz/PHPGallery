@@ -5,7 +5,7 @@ $isLogged = !empty($user);
 
 function hrefIsselected($href)
 {
-    return "href=.$href class=" . (parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH) == ".".$href ? "selected" : "");
+    return "href=.$href class=" . (parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH) == "." . $href ? "selected" : "");
 }
 
 ?>
@@ -21,7 +21,7 @@ function hrefIsselected($href)
             <a href="./account.php">Moje konto</a>
             <a href="./auth/logout.php">Wyloguj</a>
             <?php if ($user["role"] == "moderator" || $user["role"] == "admin") : ?>
-                <a href="/admin/">Panel administracyjny</a>
+                <a href="./admin.php">Panel administracyjny</a>
             <?php endif ?>
         <?php else : ?>
             <a <?= hrefIsselected("/logreg.php") ?>>Zaloguj</a>

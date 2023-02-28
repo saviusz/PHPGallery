@@ -8,6 +8,11 @@ if (empty($_SESSION["loggedUser"])) {
     exit();
 }
 
+if ($_SESSION["loggedUser"]["role"] != "admin" && $_SESSION["loggedUser"]["role"] != "moderator") {
+    header("Location: ./account.php");
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -26,10 +31,10 @@ if (empty($_SESSION["loggedUser"])) {
     <nav>
         <section>
             <h3> Na tej stronie </h3>
-            <a href="#albums">Albumy</a>
+            <?php if ($_SESSION["loggedUser"]["role"] == "admin") : ?><a href="#albums">Albumy</a><?php endif; ?>
             <a href="#photos">Zdjęcia do sprawdzenia</a>
             <a href="#comments">Komentarze</a>
-            <a href="#users">Użytkownicy</a>
+            <?php if ($_SESSION["loggedUser"]["role"] == "admin") : ?><a href="#users">Użytkownicy</a><?php endif; ?>
         </section>
         <section>
             <h3> Inne strony </h3>
@@ -54,23 +59,24 @@ if (empty($_SESSION["loggedUser"])) {
         $stmt->execute();
         $albums = $stmt->get_result();
         ?>
-        <section id="albums">
-            <h2>Albumy</h2>
-            <div class="table">
-                <?php while ($album = $albums->fetch_assoc()) : ?>
-                    <div>
-                        <div class="text"><?= $album["title"] ?>
-                            <?php if ($album["checkCount"] > 0) : ?>
-                                <br>
-                                <span class="subtitle">Do sprawdzenia: <?= $album["checkCount"] ?></span>
-                            <?php endif; ?>
+        <?php if ($_SESSION["loggedUser"]["role"] == "admin") : ?><section id="albums">
+                <h2>Albumy</h2>
+                <div class="table">
+                    <?php while ($album = $albums->fetch_assoc()) : ?>
+                        <div>
+                            <div class="text"><?= $album["title"] ?>
+                                <?php if ($album["checkCount"] > 0) : ?>
+                                    <br>
+                                    <span class="subtitle">Do sprawdzenia: <?= $album["checkCount"] ?></span>
+                                <?php endif; ?>
+                            </div>
+                            <button onclick="changeAlbumTitle(<?= $album['id'] ?>, '<?= $album['title'] ?>' )">Zmień nazwę</button>
+                            <button onclick="deleteAlbum(<?= $album['id'] ?>)">Usuń album</button>
                         </div>
-                        <button onclick="changeAlbumTitle(<?= $album['id'] ?>, '<?= $album['title'] ?>' )">Zmień nazwę</button>
-                        <button onclick="deleteAlbum(<?= $album['id'] ?>)">Usuń album</button>
-                    </div>
-                <?php endwhile; ?>
-            </div>
-        </section>
+                    <?php endwhile; ?>
+                </div>
+            </section>
+        <?php endif; ?>
         <?php
         $albumId = $_GET["albumId"] ?? 0;
 
@@ -147,6 +153,9 @@ if (empty($_SESSION["loggedUser"])) {
                             <br>
                             <span class="subtitle"><?= $comment["login"] ?></span>
                         </div>
+                        <?php if ($_SESSION["loggedUser"]["role"] == "admin") : ?>
+                            <button onclick="editComment(<?= $comment['id'] ?>)">Edytuj komentarz</button>
+                        <?php endif; ?>
                         <?php if (!$comment["isAccepted"]) : ?>
                             <button onclick="acceptComment(<?= $comment['id'] ?>)">Akceptuj komentarz</button>
                         <?php endif; ?>
@@ -174,38 +183,40 @@ if (empty($_SESSION["loggedUser"])) {
         $users = $usersStmt->get_result();
 
         ?>
-        <section id="users">
-            <h2>Użytkownicy</h2>
-            <div>
-                Wszyscy: <input type="radio" name="user_type" value="all" <?= $userMode == "all" ? "checked" : "" ?> onchange="changeUserMode()">&ensp;
-                Moderatorzy: <input type="radio" name="user_type" value="moderator" <?= $userMode == "moderator" ? "checked" : "" ?> onchange="changeUserMode()">&ensp;
-                Admini: <input type="radio" name="user_type" value="admin" <?= $userMode == "admin" ? "checked" : "" ?> onchange="changeUserMode()">
-            </div>
-            <div class="table">
-                <?php while ($user = $users->fetch_assoc()) : ?>
-                    <div>
-                        <div class="text"><?= $user["login"] ?> (<?= $user["role"] ?>)
-                            <br>
-                            <span class="subtitle"><?= $user["email"] ?></span>
+        <?php if ($_SESSION["loggedUser"]["role"] == "admin") : ?>
+            <section id="users">
+                <h2>Użytkownicy</h2>
+                <div>
+                    Wszyscy: <input type="radio" name="user_type" value="all" <?= $userMode == "all" ? "checked" : "" ?> onchange="changeUserMode()">&ensp;
+                    Moderatorzy: <input type="radio" name="user_type" value="moderator" <?= $userMode == "moderator" ? "checked" : "" ?> onchange="changeUserMode()">&ensp;
+                    Admini: <input type="radio" name="user_type" value="admin" <?= $userMode == "admin" ? "checked" : "" ?> onchange="changeUserMode()">
+                </div>
+                <div class="table">
+                    <?php while ($user = $users->fetch_assoc()) : ?>
+                        <div>
+                            <div class="text"><?= $user["login"] ?> (<?= $user["role"] ?>)
+                                <br>
+                                <span class="subtitle"><?= $user["email"] ?></span>
+                            </div>
+                            <select onchange='changeUserRole(<?= $user["id"] ?>, this)'>
+                                <option value="user" <?= $user["role"] == "user" ? "selected" : "" ?>>User</option>
+                                <option value="moderator" <?= $user["role"] == "moderator" ? "selected" : "" ?>>Moderator</option>
+                                <option value="admin" <?= $user["role"] == "admin" ? "selected" : "" ?>>Admin</option>
+                            </select>
+                            <?php if ($user["active"] == 1) : ?>
+                                <button onclick="blockUser(<?= $user['id'] ?>)">Zablokuj</button>
+                            <?php else : ?>
+                                <button onclick="unblockUser(<?= $user['id'] ?>)">Odblokuj</button>
+                            <?php endif; ?>
+                            <button onclick="deleteUser(<?= $user['id'] ?>)">Usuń</button>
                         </div>
-                        <select>
-                            <option value="user" <?= $user["role"] == "user" ? "selected" : "" ?>>User</option>
-                            <option value="moderator" <?= $user["role"] == "moderator" ? "selected" : "" ?>>Moderator</option>
-                            <option value="admin" <?= $user["role"] == "admin" ? "selected" : "" ?>>Admin</option>
-                        </select>
-                        <?php if ($user["active"] == 1) : ?>
-                            <button onclick="blockUser(<?= $user['id'] ?>)">Zablokuj</button>
-                        <?php else : ?>
-                            <button onclick="unblockUser(<?= $user['id'] ?>)">Odblokuj</button>
-                        <?php endif; ?>
-                        <button onclick="deleteUser(<?= $user['id'] ?>)">Usuń</button>
-                    </div>
-                <?php endwhile;
-                if ($users->num_rows < 1) : ?>
-                    Brak użytkowników do pokazania
-                <?php endif; ?>
-            </div>
-        </section>
+                    <?php endwhile;
+                    if ($users->num_rows < 1) : ?>
+                        Brak użytkowników do pokazania
+                    <?php endif; ?>
+                </div>
+            </section>
+        <?php endif; ?>
     </main>
 </body>
 

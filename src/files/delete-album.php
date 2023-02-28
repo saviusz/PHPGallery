@@ -12,8 +12,13 @@ if (empty($_POST["id"])) die;
 
 $id = $_POST["id"];
 
-$albumsStmt = $mysqli->prepare("SELECT * FROM albums WHERE authorId=(?) AND id=(?)");
-$albumsStmt->bind_param("ii", $_SESSION["loggedUser"]["id"], $id);
+if ($_SESSION["loggedUser"]["role"] == "admin" || $_SESSION["loggedUser"]["role"] == "moderator") {
+    $albumsStmt = $mysqli->prepare("SELECT * FROM albums WHERE id=(?)");
+    $albumsStmt->bind_param("i", $id);
+} else {
+    $albumsStmt = $mysqli->prepare("SELECT * FROM albums WHERE authorId=(?) AND id=(?)");
+    $albumsStmt->bind_param("ii", $_SESSION["loggedUser"]["id"], $id);
+}
 $albumsStmt->execute();
 
 $userAlbums = $albumsStmt->get_result();
