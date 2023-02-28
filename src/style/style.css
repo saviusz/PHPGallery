@@ -5,6 +5,7 @@
 
   --c-background: hsl(0, 0%, 97%);
   --c-surface: hsl(0, 0%, 99%);
+  --c-surface-variant: hsl(0, 0%, 78%);
   --c-on-background: hsl(0, 0%, 97%);
   --c-on-surface: hsl(0, 0%, 10%);
   --outline: rgba(128, 128, 128, 0.822);
@@ -17,6 +18,7 @@
   :root {
     --c-background: hsl(0, 0%, 10%);
     --c-surface: hsl(0, 0%, 12%);
+    --c-surface-variant: hsl(0, 0%, 16%);
     --c-on-background: hsl(0, 0%, 97%);
     --c-on-surface: hsl(0, 0%, 97%);
     --outline: rgba(59, 59, 59, 0.822);
@@ -45,6 +47,37 @@ html {
 * {
   box-sizing: border-box;
   transition: all 150ms ease-in-out;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+
+  margin: 2rem;
+
+  gap: 1.5rem;
+
+}
+
+footer {
+  width: 100%;
+  padding: 1rem;
+
+  text-align: center;
+
+  background-color: var(--c-background);
+}
+
+h1 {
+  margin-block: 0;
+}
+
+a {
+  color: var(--c-vibrant);
+}
+
+a:hover {
+  color: var(--c-lite);
 }
 
 .menu {
@@ -90,9 +123,7 @@ main section {
   background-color: var(--c-surface);
   color: var(--c-on-surface);
   padding: 2rem;
-  margin: 2rem;
-
-  width: 100%;
+  margin: 0;
 
   border-radius: 1rem;
 
@@ -101,7 +132,8 @@ main section {
   align-items: center;
 }
 
-input {
+input,
+textarea {
   font-size: 1.1em;
   padding: 0.4em;
   border-radius: 0.5rem;
@@ -110,6 +142,12 @@ input {
 
   color: var(--c-on-surface);
   background-color: var(--c-background);
+
+  resize: vertical;
+}
+
+textarea {
+  min-height: 6rem;
 }
 
 input:autofill {
@@ -142,4 +180,43 @@ select {
 
   color: var(--c-lite);
   background-color: var(--c-surface);
+}
+
+form {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-auto-rows: auto;
+  column-gap: 0.5em;
+  row-gap: 0.7rem;
+  align-items: center;
+}
+
+form>div {
+  display: contents;
+}
+
+form .name {
+  grid-column: 1;
+  text-align: right;
+}
+
+form .name::after {
+  content: ":";
+}
+
+form .value {
+  grid-column: -2;
+}
+
+form button {
+  grid-column: 1 / -1;
+}
+
+.errors {
+  color: red;
+  padding: 1rem;
+
+  width: 70%;
+
+  text-align: center;
 }

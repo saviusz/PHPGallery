@@ -1,0 +1,16 @@
+main>a {
+    color: var(--c-vibrant);
+    background-color: var(--c-surface);
+
+    text-decoration: none;
+
+    border-radius: 5px;
+
+    width: max-content;
+    padding: .5rem;
+}
+
+main>a:hover {
+    color: var(--c-lite);
+    background-color: var(--c-surface-variant);
+}

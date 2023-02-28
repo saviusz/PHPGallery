@@ -67,9 +67,9 @@ function value($val)
 
 <head>
     <?php include "./include/headers.php" ?>
-    <link rel="stylesheet" href="/style/gallery.css">
-    <title>Document</title>
-    <script src="/javascript/gallery.js"></script>
+    <link rel="stylesheet" href="./style/gallery.css">
+    <title>Galeria</title>
+    <script src="./javascript/gallery.js"></script>
 </head>
 
 <body>
@@ -86,8 +86,8 @@ function value($val)
         </div>
         <section class="gallery">
             <?php while ($row = $images->fetch_assoc()) : ?>
-                <a href="<?= "/album.php?id={$row["id"]}" ?>" class="image-wrapper">
-                    <img src="<?= "/photo/{$row["id"]}/{$row["miniature"]}.png" ?>" alt="">
+                <a href="<?= "./album.php?id={$row["id"]}" ?>" class="image-wrapper">
+                    <img src="<?= "./photo/{$row["id"]}/{$row["miniature"]}.min.webp" ?>" alt="">
                     <div class="tooltip">
                         <div><span class="title"><?= $row["title"] ?></span></div>
                         <div><span class="name">Utworzony</span><span class="value"><?= $row["createdAt"] ?></span></div>
@@ -104,6 +104,7 @@ function value($val)
             <?php if ($page < $numberOfPages) : ?><button onclick="setPage(<?= $page + 1 ?>)">Następna</button><?php endif ?>
         </div>
     </main>
+    <?php include("./include/footer.php") ?>
 </body>
 
 </html>

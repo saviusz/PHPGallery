@@ -1,15 +1,27 @@
-main {
+.sorting {
+  align-self: flex-end;
+}
+
+.pagination {
   display: flex;
-  flex-direction: column;
+  width: 100%;
+  justify-content: center;
 
-  margin: 2rem auto;
+  gap: 2em;
 
-  width: 85%;
+  padding: 1em;
+}
+
+.pagination button {
+  background-color: transparent;
+  color: var(--c-vibrant);
+}
+
+.pagination button.selected {
+  color: var(--c-lite);
 }
 
 .gallery {
-  margin: 0;
-
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   grid-auto-rows: 1fr;
@@ -66,7 +78,7 @@ main {
   /* display: none; */
 }
 
-.image-wrapper .tooltip > div {
+.image-wrapper .tooltip>div {
   display: contents;
 }
 
@@ -90,27 +102,4 @@ main {
   font-size: 1.1em;
 
   text-align: center;
-}
-
-.sorting {
-  align-self: flex-end;
-}
-
-.pagination {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-
-  gap: 2em;
-
-  padding: 1em;
-}
-
-.pagination button {
-  background-color: transparent;
-  color: var(--c-vibrant);
-}
-
-.pagination button.selected {
-  color: var(--c-lite);
 }

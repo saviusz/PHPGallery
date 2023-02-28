@@ -1,0 +1,29 @@
+.album-form {
+    display: flex;
+
+    padding: 0 0;
+
+    overflow: auto;
+
+    max-height: 65vh;
+}
+
+.album-form a {
+    display: block;
+    width: 100%;
+    padding: 8px 1rem;
+
+    border: var(--c-outline) 1px solid;
+    border-radius: 2px;
+
+    text-decoration: none;
+
+    color: var(--c-on-surface);
+
+    text-align: center;
+}
+
+.album-form a:hover {
+    background-color: var(--c-surface-variant);
+    color: var(--c-lite);
+}
